@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         isGravityFlipped = false;
+
     }
     private void Update()
     {
@@ -52,7 +53,6 @@ public class PlayerMovement : MonoBehaviour
             GetComponent<Animator>().SetBool("IsRunning", false);
         }
     }
-
     public void JumpNChangeGravity()
     {
         if (Input.GetKeyDown(KeyCode.Space))
