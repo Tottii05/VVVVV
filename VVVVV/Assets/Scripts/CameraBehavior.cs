@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class CameraBehavior : MonoBehaviour
 {
-    public GameObject player;
-    // Start is called before the first frame update
+    public static CameraBehavior virtualCamera;
     void Start()
     {
-        
+        if (virtualCamera == null)
+        {
+            virtualCamera = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame
