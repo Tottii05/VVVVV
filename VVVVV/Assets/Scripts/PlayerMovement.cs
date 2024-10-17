@@ -4,26 +4,26 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private bool isGravityFlipped = false;
+    [SerializeField] public bool isGravityFlipped = false;
     private float gravityForce = 12f;
     private float speedForce = 15f;
+    private bool grounded = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         isGravityFlipped = false;
-
     }
+
     private void Update()
     {
         Move();
         ApplyCustomGravity();
+        CheckGrounded();
     }
 
     public void Move()
     {
         float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
         GetComponent<Rigidbody2D>().velocity = new Vector2(horizontal * speedForce, GetComponent<Rigidbody2D>().velocity.y);
         MirrorSpriteHorizontal();
         RunAnimation();
@@ -44,26 +44,29 @@ public class PlayerMovement : MonoBehaviour
 
     public void RunAnimation()
     {
-        if (Input.GetAxis("Horizontal") != 0)
-        {
-            GetComponent<Animator>().SetBool("IsRunning", true);
-        }
-        else
-        {
-            GetComponent<Animator>().SetBool("IsRunning", false);
-        }
+        GetComponent<Animator>().SetBool("IsRunning", Input.GetAxis("Horizontal") != 0);
     }
+
     public void JumpNChangeGravity()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
             isGravityFlipped = !isGravityFlipped;
             transform.localScale = new Vector2(transform.localScale.x, -transform.localScale.y);
         }
     }
+
     public void ApplyCustomGravity()
     {
         float force = isGravityFlipped ? gravityForce : -gravityForce;
         GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, force);
+    }
+
+    public void CheckGrounded()
+    {
+        Vector2 direction = isGravityFlipped ? Vector2.up : Vector2.down;
+        RaycastHit2D leftHit = Physics2D.Raycast(transform.position + new Vector3(-0.5f, 0), direction, 1.1f);
+        RaycastHit2D rightHit = Physics2D.Raycast(transform.position + new Vector3(0.5f, 0), direction, 1.1f);
+        grounded = leftHit.collider != null || rightHit.collider != null;
     }
 }

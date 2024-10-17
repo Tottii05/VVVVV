@@ -16,11 +16,10 @@ public class PlayerManagerScript : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
     }
     void Start()
     {
-
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame

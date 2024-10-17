@@ -5,25 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class FlagBehavior : MonoBehaviour
 {
-    [SerializeField] public bool IsStartFlag;
-    [SerializeField] public bool IsEndFlag;
-    public GameObject player;
-
     private GameManagerScript gameManager;
 
     void Start()
     {
-        gameManager = FindObjectOfType<GameManagerScript>();
+        gameManager = GameManagerScript.instance;
     }
 
     public void ChangeScenes()
     {
-        if (IsStartFlag)
+        if (gameManager != null)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-        }
-        else if (IsEndFlag)
-        {
+            gameManager.end = true;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
