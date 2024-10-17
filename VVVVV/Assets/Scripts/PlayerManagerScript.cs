@@ -8,9 +8,9 @@ public class PlayerManagerScript : MonoBehaviour
     // Start is called before the first frame update
     public void Awake()
     {
-        if (instance == null)
+        if (PlayerManagerScript.instance == null)
         {
-            instance = this;
+            PlayerManagerScript.instance = this;
         }
         else
         {
