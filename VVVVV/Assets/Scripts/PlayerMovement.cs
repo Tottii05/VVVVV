@@ -64,9 +64,17 @@ public class PlayerMovement : MonoBehaviour
 
     public void CheckGrounded()
     {
-        Vector2 direction = isGravityFlipped ? Vector2.up : Vector2.down;
-        RaycastHit2D leftHit = Physics2D.Raycast(transform.position + new Vector3(-0.5f, 0), direction, 1.1f);
-        RaycastHit2D rightHit = Physics2D.Raycast(transform.position + new Vector3(0.5f, 0), direction, 1.1f);
-        grounded = leftHit.collider != null || rightHit.collider != null;
+        grounded = false;
+        Vector2 direction = isGravityFlipped ? Vector2.up : Vector2.down; //-transform.up
+        RaycastHit2D leftHit = Physics2D.Raycast(transform.position + new Vector3(-0.4f, 0), direction, 1.1f);
+        RaycastHit2D rightHit = Physics2D.Raycast(transform.position + new Vector3(0.3f, 0), direction, 1.1f);
+        if(leftHit.collider != null)
+        {
+            if (leftHit.collider.gameObject.layer != 7 && rightHit.collider.gameObject.layer != 7)
+            {
+                grounded = leftHit.collider != null || rightHit.collider != null;
+            }
+        }
+
     }
 }

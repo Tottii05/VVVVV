@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManagerScript : MonoBehaviour
 {
     public static GameManagerScript instance;
-    public GameObject player;
+    private GameObject player;
     public GameObject UpKiller;
     public GameObject DownKiller;
     public Vector2 endFlagPosition;
@@ -16,15 +16,16 @@ public class GameManagerScript : MonoBehaviour
 
     public void Awake()
     {
-        if (instance == null)
+        if (GameManagerScript.instance == null)
         {
-            instance = this;
+            GameManagerScript.instance = this;
         }
         else
         {
             Destroy(gameObject);
         }
         SceneManager.sceneLoaded += onSceneLoaded;
+        player = PlayerManagerScript.instance.gameObject;
     }
 
     void Start()
@@ -41,21 +42,25 @@ public class GameManagerScript : MonoBehaviour
 
     void onSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        UpKiller = GameObject.Find("UpKiller");
-        DownKiller = GameObject.Find("DownKiller");
-        UpKiller.GetComponent<Renderer>().enabled = false;
-        DownKiller.GetComponent<Renderer>().enabled = false;
-        if (end)
+        if(GameManagerScript.instance == this)
         {
-            endFlagPosition = GameObject.Find("EndFlag").transform.position;
-            startFlagPosition = GameObject.Find("StartFlag").transform.position;
-            player.transform.position = startFlagPosition + new Vector2(1f, 0f);
+            UpKiller = GameObject.Find("UpKiller");
+            DownKiller = GameObject.Find("DownKiller");
+            UpKiller.GetComponent<Renderer>().enabled = false;
+            DownKiller.GetComponent<Renderer>().enabled = false;
+            if (end)
+            {
+                endFlagPosition = GameObject.Find("EndFlag").transform.position;
+                startFlagPosition = GameObject.Find("StartFlag").transform.position;
+                player.transform.position = startFlagPosition + new Vector2(1f, 0f);
+            }
+            else
+            {
+                startFlagPosition = GameObject.Find("StartFlag").transform.position;
+                endFlagPosition = GameObject.Find("EndFlag").transform.position;
+                player.transform.position = endFlagPosition + new Vector2(-1f, 0f);
+            }
         }
-        else
-        {
-            startFlagPosition = GameObject.Find("StartFlag").transform.position;
-            endFlagPosition = GameObject.Find("EndFlag").transform.position;
-            player.transform.position = endFlagPosition + new Vector2(-1f, 0f);
-        }
+
     }
 }

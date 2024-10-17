@@ -10,7 +10,7 @@ public class OutOfMapBehavior : MonoBehaviour
     void Start()
     {
         spawnPoint = GameManagerScript.instance.startFlagPosition + new Vector2(1f, 0f);
-        player = GameManagerScript.instance.player;
+        player = PlayerManagerScript.instance.gameObject;
     }
 
     // Update is called once per frame
@@ -22,8 +22,7 @@ public class OutOfMapBehavior : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            if (player != null)
-            {
+
                 player.transform.position = spawnPoint;
                 player.GetComponent<PlayerMovement>().isGravityFlipped = false;
                 if (player.transform.localScale.y < 0)
@@ -34,11 +33,6 @@ public class OutOfMapBehavior : MonoBehaviour
                 {
                     player.transform.localScale = new Vector2(1, transform.localScale.y);
                 }
-            }
-            else
-            {
-                Debug.LogError("El jugador no está asignado o ha sido destruido.");
-            }
         }
     }
 
