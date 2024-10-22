@@ -6,16 +6,13 @@ public class SpykeBehavior : MonoBehaviour
 {
     public GameObject player;
     public Vector2 spawnPoint;
-    // Start is called before the first frame update
+    private Animator playerAnimator;
+
     void Start()
     {
         spawnPoint = GameManagerScript.instance.startFlagPosition + new Vector2(1f, 0f);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         player = GameObject.Find("Player");
+        playerAnimator = player.GetComponent<Animator>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -25,12 +22,16 @@ public class SpykeBehavior : MonoBehaviour
             StartCoroutine(KillCoroutine());
         }
     }
-
+    private void Respawn()
+    {
+        player.transform.position = spawnPoint;
+    }
     IEnumerator KillCoroutine()
     {
-        player.GetComponent<Renderer>().enabled = false;
-        yield return new WaitForSeconds(0.60f);
-        player.GetComponent<Renderer>().enabled = true;
-        player.transform.position = spawnPoint;
+        playerAnimator.SetBool("IsDead", true);
+        yield return new WaitForSeconds(0.05f);
+        playerAnimator.SetBool("IsDead", false);
+        yield return new WaitForSeconds(0.1f);
+        Respawn();
     }
 }
