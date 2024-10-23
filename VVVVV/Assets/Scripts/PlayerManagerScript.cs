@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerManagerScript : MonoBehaviour
 {
     public static PlayerManagerScript instance;
-    // Start is called before the first frame update
+
     public void Awake()
     {
         if (PlayerManagerScript.instance == null)
