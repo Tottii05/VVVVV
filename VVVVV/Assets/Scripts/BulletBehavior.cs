@@ -1,16 +1,19 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletBehavior : MonoBehaviour
 {
     private const float Speed = 5.0f;
+    private Animator playerAnimator;
+    public GameObject player;
+    public Vector2 spawnPoint;
 
     void Start()
     {
-
+        spawnPoint = GameManagerScript.instance.startFlagPosition + new Vector2(1f, 0f);
+        player = GameObject.Find("Player");
+        playerAnimator = player.GetComponent<Animator>();
     }
-
     void Update()
     {
         Move();
@@ -23,9 +26,10 @@ public class BulletBehavior : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.layer != 0)
+        if (collision.gameObject.tag != "Cannon")
         {
-            Destroy(gameObject);
+            GameObject cannon = GameObject.Find("Cannon");
+            cannon.GetComponent<CannonBehavior>().Push(gameObject);
         }
     }
 }

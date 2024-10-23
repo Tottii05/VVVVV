@@ -8,10 +8,11 @@ public class PlayerMovement : MonoBehaviour
     private float gravityForce = 12f;
     private float speedForce = 15f;
     private bool grounded = false;
-
+    private Animator playerAnimator;
     void Start()
     {
         isGravityFlipped = false;
+        playerAnimator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -74,6 +75,30 @@ public class PlayerMovement : MonoBehaviour
             {
                 grounded = leftHit.collider != null || rightHit.collider != null;
             }
+        }
+    }
+    private void Respawn()
+    {
+        if (isGravityFlipped) {
+            isGravityFlipped = false;
+            transform.localScale = new Vector2(transform.localScale.x, -transform.localScale.y);
+        }
+        transform.position = GameManagerScript.instance.startFlagPosition + new Vector2(1f, 0f);
+    }
+    IEnumerator KillCoroutine()
+    {
+        playerAnimator.SetBool("IsDead", true);
+        yield return new WaitForSeconds(0.05f);
+        playerAnimator.SetBool("IsDead", false);
+        yield return new WaitForSeconds(0.1f);
+        Respawn();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Killer")
+        {
+            StartCoroutine(KillCoroutine());
         }
     }
 }

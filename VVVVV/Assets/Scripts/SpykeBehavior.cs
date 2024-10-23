@@ -14,24 +14,4 @@ public class SpykeBehavior : MonoBehaviour
         player = GameObject.Find("Player");
         playerAnimator = player.GetComponent<Animator>();
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            StartCoroutine(KillCoroutine());
-        }
-    }
-    private void Respawn()
-    {
-        player.transform.position = spawnPoint;
-    }
-    IEnumerator KillCoroutine()
-    {
-        playerAnimator.SetBool("IsDead", true);
-        yield return new WaitForSeconds(0.05f);
-        playerAnimator.SetBool("IsDead", false);
-        yield return new WaitForSeconds(0.1f);
-        Respawn();
-    }
 }
