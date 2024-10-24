@@ -301,26 +301,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 03d58438ff222ea4d81bde22f3ef3f34, type: 3}
---- !u!1 &401121251 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2527472454324803308, guid: 03d58438ff222ea4d81bde22f3ef3f34, type: 3}
-  m_PrefabInstance: {fileID: 1473915735556486423}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &401121254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 401121251}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4c8c54e38dce2244af390acc107a231, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 4338978236111391842, guid: b8603ee7b7e9e1044917a5dd620de885, type: 3}
-  spawner: {fileID: 401121251}
-  isPlayerNearby: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,7 +499,7 @@ GameObject:
   - component: {fileID: 949772828}
   - component: {fileID: 949772832}
   - component: {fileID: 949772831}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1906,7 +1886,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2527472454324803308, guid: 03d58438ff222ea4d81bde22f3ef3f34, type: 3}
       propertyPath: m_Layer
-      value: 2
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7812077514968815819, guid: 03d58438ff222ea4d81bde22f3ef3f34, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1951,10 +1931,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2527472454324803308, guid: 03d58438ff222ea4d81bde22f3ef3f34, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 401121254}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 03d58438ff222ea4d81bde22f3ef3f34, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

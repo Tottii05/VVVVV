@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 6941409676493108454}
   - component: {fileID: 6541275917891599775}
   - component: {fileID: 114380536572001069}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Killer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 26.15, y: -2.51, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -194,4 +194,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  spawnPoint: {x: 0, y: 0}

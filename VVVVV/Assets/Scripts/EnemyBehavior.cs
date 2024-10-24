@@ -1,20 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class EnemyBehavior : MonoBehaviour
 {
     private Vector2 SpawnPosition;
-    [SerializeField] private float patrolDistance = 5f;
     private float speed = -2f;
-    private Vector2 targetPosition;
-    private bool movingLeft = true;
     public GameObject player;
+    private Rigidbody2D _rb;
+    private bool disabled = false;
 
     void Start()
     {
         SpawnPosition = transform.position;
-        targetPosition = SpawnPosition + new Vector2(-patrolDistance, 0);
+        _rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -24,36 +24,25 @@ public class EnemyBehavior : MonoBehaviour
 
     public void Patrol()
     {
-        transform.position = Vector2.MoveTowards(transform.position, targetPosition, -speed * Time.deltaTime);
-        if ((Vector2)transform.position == targetPosition)
-        {
-            movingLeft = !movingLeft;
-            UpdateTargetPosition();
-            FlipSprite();
-        }
+        //transform.position = Vector2.MoveTowards(transform.position, transform.right, -speed * Time.deltaTime);
+        _rb.velocity = transform.right * transform.localScale.x * speed;
+        UpdateTargetPosition();
     }
 
     private void UpdateTargetPosition()
     {
-        if (movingLeft)
-        {
-            targetPosition = SpawnPosition + new Vector2(patrolDistance, 0);
-        }
-        else
-        {
-            targetPosition = SpawnPosition - new Vector2(patrolDistance, 0);
-        }
-    }
 
-    private void FlipSprite()
-    {
-        if (movingLeft)
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, -1* transform.localScale.x*  transform.right+ -0.5f* transform.up, 2f);
+        Debug.DrawRay(transform.position, transform.localScale.x *-1* transform.right + -0.5f * transform.up, Color.red);
+        if (hit.collider == null && !disabled)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector3(transform.localScale.x * -1, 1, 1);
+            disabled = true;
         }
         else
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            Debug.Log(hit.collider.gameObject.name);
+            disabled = false;
         }
     }
 }
