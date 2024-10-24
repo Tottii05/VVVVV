@@ -8,7 +8,9 @@ public class PlayerMovement : MonoBehaviour
     private float gravityForce = 12f;
     private float speedForce = 15f;
     private bool grounded = false;
+    private bool dead = false;
     private Animator playerAnimator;
+    public Rigidbody2D rb;
     void Start()
     {
         isGravityFlipped = false;
@@ -24,11 +26,14 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        GetComponent<Rigidbody2D>().velocity = new Vector2(horizontal * speedForce, GetComponent<Rigidbody2D>().velocity.y);
-        MirrorSpriteHorizontal();
-        RunAnimation();
-        JumpNChangeGravity();
+        if (!dead)
+        {
+            float horizontal = Input.GetAxis("Horizontal");
+            GetComponent<Rigidbody2D>().velocity = new Vector2(horizontal * speedForce, GetComponent<Rigidbody2D>().velocity.y);
+            MirrorSpriteHorizontal();
+            RunAnimation();
+            JumpNChangeGravity();
+        }
     }
 
     public void MirrorSpriteHorizontal()
@@ -84,10 +89,13 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector2(transform.localScale.x, -transform.localScale.y);
         }
         transform.position = GameManagerScript.instance.startFlagPosition + new Vector2(1f, 0f);
+        dead = false;
+        rb.constraints = RigidbodyConstraints2D.None;
     }
     IEnumerator KillCoroutine()
     {
         playerAnimator.SetBool("IsDead", true);
+        dead = true;
         yield return new WaitForSeconds(0.05f);
         playerAnimator.SetBool("IsDead", false);
         yield return new WaitForSeconds(0.1f);

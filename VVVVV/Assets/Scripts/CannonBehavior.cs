@@ -5,7 +5,7 @@ using UnityEngine;
 public class CannonBehavior : MonoBehaviour
 {
     private const float Cooldown = 3.0f;
-    private const float RangeChecker = 17.0f;
+    private const float RangeChecker = 30.0f;
     public GameObject bulletPrefab;
     public GameObject spawner;
     private Stack<GameObject> stack;
