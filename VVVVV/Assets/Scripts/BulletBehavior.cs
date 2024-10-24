@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 public class BulletBehavior : MonoBehaviour
@@ -6,9 +7,11 @@ public class BulletBehavior : MonoBehaviour
     private const float Speed = 5.0f;
     public Vector2 spawnPoint;
     public CannonBehavior cannon;
+    private SpriteRenderer sp;
 
     void Start()
     {
+        sp = GetComponent<SpriteRenderer>();
         spawnPoint = GameManagerScript.instance.startFlagPosition + new Vector2(1f, 0f);
     }
     void Update()
@@ -23,6 +26,25 @@ public class BulletBehavior : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        cannon.Push(gameObject);
+        if (collision.gameObject.name == "LayerTrigger")
+        {
+            ChangeOrderInLayer(-1);
+        }
+        else
+        {
+            cannon.Push(gameObject);
+        }
+    }
+    public void ChangeOrderInLayer(int newOrder)
+    {
+        if (sp != null)
+        {
+            sp.sortingOrder = newOrder;
+            Debug.Log("Order in Layer cambiado a: " + newOrder);
+        }
+        else
+        {
+            Debug.LogWarning("No se encontró un componente SpriteRenderer en este objeto.");
+        }
     }
 }

@@ -48,7 +48,7 @@ public class GameManagerScript : MonoBehaviour
             DownKiller = GameObject.Find("DownKiller");
             UpKiller.GetComponent<Renderer>().enabled = false;
             DownKiller.GetComponent<Renderer>().enabled = false;
-            player.transform.localScale = new Vector2(transform.localScale.x, 1f);
+            player.transform.localScale = new Vector2(transform.localScale.x, transform.localScale.y);
             if (end)
             {
                 endFlagPosition = GameObject.Find("EndFlag").transform.position;

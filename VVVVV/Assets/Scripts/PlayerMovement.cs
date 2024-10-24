@@ -76,7 +76,6 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit2D rightHit = Physics2D.Raycast(transform.position + new Vector3(0.3f, 0), direction, 1.1f);
         if(leftHit.collider != null)
         {
-            Debug.Log(leftHit.collider.gameObject.layer);
             if (leftHit.collider.gameObject.layer == 8 && rightHit.collider.gameObject.layer == 8)
             {
                 grounded = leftHit.collider != null || rightHit.collider != null;
@@ -91,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
         }
         transform.position = GameManagerScript.instance.startFlagPosition + new Vector2(1f, 0f);
         dead = false;
-        rb.constraints = RigidbodyConstraints2D.None;
+        //rb.constraints = RigidbodyConstraints2D.None;
     }
     IEnumerator KillCoroutine()
     {

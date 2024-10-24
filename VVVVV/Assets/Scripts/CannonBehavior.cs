@@ -32,13 +32,11 @@ public class CannonBehavior : MonoBehaviour
 
     private IEnumerator Shoot()
     {
-        Debug.Log(gameObject.name + stack.Count);
         if (isPlayerNearby && stack.Count > 0)
         {
             GameObject bullet = Pop();
             bullet.transform.position = spawner.transform.position;
             bullet.SetActive(true);
-            Debug.Log("SHOOTING");
         }
         yield return new WaitForSeconds(Cooldown);
         yield return Shoot();
@@ -59,6 +57,5 @@ public class CannonBehavior : MonoBehaviour
     {
         float distance = Vector2.Distance(transform.position, GameObject.Find("Player").transform.position);
         isPlayerNearby = distance < RangeChecker;
-        Debug.Log(gameObject.name + isPlayerNearby);
     }
 }
