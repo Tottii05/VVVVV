@@ -11,9 +11,11 @@ public class CannonBehavior : MonoBehaviour
     private Stack<GameObject> stack;
     [SerializeField] private bool isPlayerNearby;
     public GameObject spawnpoint;
+    private AudioManager audioManager;
 
     void Start()
     {
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         stack = new Stack<GameObject>();
         for (int i = 0; i < 3; i++)
         {
@@ -35,6 +37,7 @@ public class CannonBehavior : MonoBehaviour
         if (isPlayerNearby && stack.Count > 0)
         {
             GameObject bullet = Pop();
+            audioManager.PlaySFX(audioManager.cannonShot);
             bullet.transform.position = spawner.transform.position;
             bullet.SetActive(true);
         }

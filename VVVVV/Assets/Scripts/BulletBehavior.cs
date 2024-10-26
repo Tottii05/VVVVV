@@ -1,5 +1,3 @@
-using System.Collections;
-using UnityEditor.UIElements;
 using UnityEngine;
 
 public class BulletBehavior : MonoBehaviour
@@ -8,6 +6,7 @@ public class BulletBehavior : MonoBehaviour
     public Vector2 spawnPoint;
     public CannonBehavior cannon;
     private SpriteRenderer sp;
+    private float timeToDestroy = 5.0f;
 
     void Start()
     {
@@ -17,6 +16,7 @@ public class BulletBehavior : MonoBehaviour
     void Update()
     {
         Move();
+        LifeTimeChecker();
     }
 
     public void Move()
@@ -26,25 +26,15 @@ public class BulletBehavior : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "LayerTrigger")
-        {
-            ChangeOrderInLayer(-1);
-        }
-        else
+        cannon.Push(gameObject);
+    }
+
+    public void LifeTimeChecker()
+    {
+        timeToDestroy -= Time.deltaTime;
+        if (timeToDestroy <= 0)
         {
             cannon.Push(gameObject);
-        }
-    }
-    public void ChangeOrderInLayer(int newOrder)
-    {
-        if (sp != null)
-        {
-            sp.sortingOrder = newOrder;
-            Debug.Log("Order in Layer cambiado a: " + newOrder);
-        }
-        else
-        {
-            Debug.LogWarning("No se encontró un componente SpriteRenderer en este objeto.");
         }
     }
 }
