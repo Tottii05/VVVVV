@@ -84,16 +84,15 @@ public class PlayerMovement : MonoBehaviour
     {
         grounded = false;
         Vector2 direction = isGravityFlipped ? Vector2.up : Vector2.down;
-        RaycastHit2D leftHit = Physics2D.Raycast(transform.position + new Vector3(-0.4f, 0), direction, 1.1f);
-        RaycastHit2D rightHit = Physics2D.Raycast(transform.position + new Vector3(0.3f, 0), direction, 1.1f);
-        if(leftHit.collider != null && rightHit.collider != null)
+        Vector2 boxCenter = (Vector2)transform.position + direction * 0.1f;
+        Vector2 boxSize = new Vector2(0.5f, 0.1f);
+        RaycastHit2D hit = Physics2D.BoxCast(boxCenter, boxSize, 0f, direction, 0.5f);
+        if (hit.collider != null && hit.collider.gameObject.layer == 8)
         {
-            if (leftHit.collider.gameObject.layer == 8 && rightHit.collider.gameObject.layer == 8)
-            {
-                grounded = leftHit.collider != null || rightHit.collider != null;
-            }
+            grounded = true;
         }
     }
+
     private void Respawn()
     {
         if (isGravityFlipped) {
